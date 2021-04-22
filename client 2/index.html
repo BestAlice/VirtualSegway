@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Robot control panel</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <LINK href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+</head>
+
+<body>
+    <p>Adress of websocket server</p>
+    <input id="adress-field" type="text" value="127.0.0.1:8080">
+    <input type="button" value="Connect" onclick="inputConnect()">
+    <p>Server: <b id="server-adress">None</b></p>
+    <p>Connection status: <b id="connection-status-field">disconnected</b></p>
+
+    <div id="left">
+        <a-scene embedded>
+            <a-line></a-line>
+            <a-entity id="robot-shape" position="0 0 0">
+                <a-entity id="body-shape" geometry="primitive: box; width: 0.072; height: 0.110; depth: 0.052" position="0 0.092 0" material="color: brown"></a-entity>
+                <a-entity id="wheelR-shape" position="0 0 0.092" rotation="90 0 0" geometry="primitive: cylinder; height: 0.028; radius: 0.028" material="color: gray"></a-entity>
+                <a-entity id="wheelL-shape" position="0 0 -0.092" rotation="90 0 0" geometry="primitive: cylinder; height: 0.028; radius: 0.028" material="color: gray"></a-entity>
+            </a-entity>
+            <a-box color="green" position="5 0 0" scale="10 0.001 0.001"></a-box>
+            <a-box color="blue" position="0 10 0" scale="0.001 20 0.001"></a-box>
+            <a-box color="red" position="0 0 -5" scale="0.001 0.001 10"></a-box>
+            <a-box color="black" position="1 0 0" scale="0.001 0.001 2"></a-box>
+            <a-box color="black" position="0 0 1" scale="2 0.001 0.001"></a-box>
+            <a-box color="black" position="-1 0 0" scale="0.001 0.001 2"></a-box>
+            <a-box color="black" position="0 0 -1" scale="2 0.001 0.001"></a-box>
+            <a-camera position="0 0.5 1" rotation="0 0 0"></a-camera>
+        </a-scene>
+    </div>
+    <div id="right">
+        <div class="elems-in-row">
+            <input type="button" id="start-button" value="Start" onclick="inputStart()">
+            <input type="button" id="stop-button" value="Stop" onclick="inputStop()">
+            <input type="button" id="status-button" value="Status" onclick="inputStatus()">
+            <input type="button" id="clear-button" value="Clear" onclick="inputClear()">
+            <input id="log-path-field" value="">
+            <input type="button" id="save-log-button" value="Save log" onclick="inputSaveLog()">
+        </div>
+        <p>Команды с параметрами</p>
+        <div class="elems-in-row">
+            <div id="button_quarter">
+                <input type="button" id="set-target-button" value="Set target" onclick="inputSetTarget()">
+            </div>
+            <div id="quarter">
+                 <input id="target-x-field" type="number" value=0 display="inline-block"> 
+                 <p style="display:inline">Target x</p><br>
+                <input id="target-y-field" type="number" value=0>
+                <p style="display:inline">Target y</p><br>
+            </div>
+            <div id="button_quarter">
+                <input type="button" id="set-regulator-k-button" value="Set regulator K" onclick="inputSetRegulatorK()">
+            </div>
+            <div id="quarter">
+                 <input id="regulator-k-field" type="text" value="{}" display="inline-block"> 
+                 <br><br><p style="display:inline" align="center">Regulator k</p>
+            </div>
+        </div>
+        <table>
+            <tr>
+             <th>Параметр</th>
+             <th>Значение</th>
+            </tr>
+            <tr><td> time</td> <td id="t-field">0</td></tr>
+            <tr><td> x</td> <td id="x-field">0</td></tr>
+            <tr><td> y</td> <td id="y-field">0</td></tr>
+            <tr><td> &#936</td> <td id="psi-field">0</td></tr>
+            <tr><td> &#945</td> <td id="alpfa-field">0</td></tr>
+            <tr><td> &#946</td> <td id="beta-field">0</td></tr>
+            <tr><td> &#961</td> <td id="ro-field">0</td></tr>
+            <tr><td> tetaT</td> <td id="tetaT-field">0</td></tr>
+          </table>
+          <p>Консольный вывод</p>
+          <dev id="server-messages-field"> 
+                Привет
+          </dev>
+          <br>
+        <input type="button" value="Отчистить консоль" onclick="inputClearMessages()">
+        <input id="user-message-field" value="">
+        <input type="button" value="send" onclick="inputSendMessage()">
+    </div>  
+    
+    
+</body>
+
+<script src="script.js"></script>
