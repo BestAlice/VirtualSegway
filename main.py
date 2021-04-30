@@ -11,7 +11,7 @@ from regulator import Regulator
 import defaults
 from selfControlFunction import selfControlFunction
 
-from virtualPhysics import VirtualPhysics
+from virtualPhysics import *
 from regulator import *
 import numpy as np
 
@@ -19,13 +19,21 @@ import numpy as np
 def selfControlThreadFunction():
     global commandToController, messagesToWSclients
     logging = Logging()
+    
+    #regulator = Regulator()
+
+    #regulator = LinearProportionalRegulator()
+    #regulator.setCoefficients({"Kpsi": 10000,"Kpsi1":1000,"KtetaT":0.01,"psiMax":0.5,"Krot": 1000,"rotMax": 1000})
+    
+    #regulator = AkkermanProportionalRegulator()
+    #regulator.setCoefficients({"tp":1, "perfectPsi":0, "perfectPsi1":0, "perfectTeta1":0})
+
     regulator = HybridProportionalRegulator()
-    # {"Kpsi": 10000,"Kpsi1":1000,"KtetaT":0.01,"psiMax":0.5,"Krot": 1000,"rotMax": 1000}
-    # {"tp":1, "perfectPsi":0, "perfectPsi1":0, "perfectTeta1":0}
     regulator.setCoefficients({"KtetaT":0.01, "psiMax":0.3, "Krot":50, "rotMax":100, "tp":2})
+
     coeffs = defaults.getCoeffs()
     target = defaults.getTarget()
-    physics = VirtualPhysics(coeffs, np.array([[0.01],[0],[0]]))
+    physics = VirtualPhysics2(coeffs, np.array([[2.0],[0],[0]]))
     
     command = commandToController
 
